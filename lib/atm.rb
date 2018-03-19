@@ -5,12 +5,14 @@ class Atm
     @funds = 1000
   end
 
-  def withdraw(amount, account)
+  def withdraw(amount, pin_code, account)
+
     case
     when insufficient_funds_in_account?(amount, account)
-      { status: false, message: 'insufficient funds', date: Date.today}
+      { status: false, message: 'insufficient funds', date: Date.today }
     when insufficient_funds_in_atm?(amount)
-      { status: false, message: 'insufficient funds in ATM', date: Date.today}
+      { status: false, message: 'insufficient funds in ATM',
+        date: Date.today}
     else
       perform_transection(amount, account)
     end
