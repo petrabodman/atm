@@ -7,6 +7,8 @@ class Atm
 
   def withdraw(amount, pin_code, account)
     case
+    when account_status?(account.status)
+      { status: false, message: 'account disabled', date: Date.today}
     when insufficient_funds_in_account?(amount, account)
       { status: false, message: 'insufficient funds', date: Date.today }
     when insufficient_funds_in_atm?(amount)
@@ -39,9 +41,13 @@ class Atm
     Date.strptime(exp_date, '%m/%y') < Date.today
   end
 
+  def account_status?(account_status)
+    account_status != :active
+  end
+
   def perform_transection(amount, account)
     @funds -= amount
     account.balance -= amount
     { status: true, message: 'success', date: Date.today, amount: amount }
-   end
   end
+end

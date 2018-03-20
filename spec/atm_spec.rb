@@ -3,7 +3,7 @@ require 'date'
 
 describe Atm do
   let (:account) {class_double('Account', pin_code: '1234',
-    exp_date: '04/19')}
+    exp_date: '04/19', status: :active)}
   before do
     allow(account).to receive(:balance).and_return(100)
     allow(account).to receive(:balance=)
@@ -45,5 +45,11 @@ describe Atm do
     expected_output = { status: false, message: 'card expired',
     date: Date.today }
     expect(subject.withdraw(6, '1234', account)).to eq expected_output
+  end
+  it 'reject withdraw if account is disabled' do
+    allow(account).to receive(:status).and_return(:disabled)
+    expected_output = { status: false, message: 'account disabled',
+    date: Date.today}
+    expect(subject.withdraw(105, '1234', account)).to eq expected_output
   end
 end
