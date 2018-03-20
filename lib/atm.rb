@@ -13,6 +13,8 @@ class Atm
     when insufficient_funds_in_atm?(amount)
       { status: false, message: 'insufficient funds in ATM',
         date: Date.today}
+      when incorrect_pin?(pin_code, account.pin_code)
+        { status: false, message: 'wrong pin', date: Date.today}
     else
       perform_transection(amount, account)
     end
@@ -25,6 +27,9 @@ class Atm
   end
   def insufficient_funds_in_atm?(amount)
     @funds < amount
+  end
+  def incorrect_pin?(pin_code, actual_pin)
+    pin_code != actual_pin
   end
 
   def perform_transection(amount, account)
