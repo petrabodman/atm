@@ -63,9 +63,8 @@ end
         expect(subject.account.balance).to be 0
         expect(subject.cash).to be 100
     end
-
+  end
     describe 'can not manage funds if no account been created' do
-    end
       it 'can\'t deposit funds' do
         expect { subject.deposit(100) }.to raise_error(RuntimeError, 'No account present')
     end
