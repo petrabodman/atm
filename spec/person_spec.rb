@@ -15,7 +15,7 @@ describe Person do
 
   it 'is expected to have a :cash attribute with
   value of 0 on initialize' do
-  expect (subject.cash).to eq 0
+  expect(subject.cash).to eq 0
 end
 
   it 'is expected to have a :account attribute' do
@@ -36,7 +36,7 @@ end
     let(:atm) { Atm.new }
     before { subject.create_account }
     it 'can deposit funds' do
-      expect(subject.deposit(100)).to be_truthy
+    expect(subject.deposit(100)).to be_truthy
     end
 
     it 'funds are added to the account balance - deducted from cash' do
@@ -47,7 +47,7 @@ end
     end
 
     it 'can withdraw funds' do
-      command = lambda { subject.withdraw(amount: 100, pin(subject.account.pin_code, account: subject.account, atm: atm)) }
+      command = lambda { subject.withdraw(amount: 100, pin: subject.account.pin_code, account: subject.account, atm: atm) }
         expect(command.call).to be_truthy
     end
 
@@ -70,4 +70,5 @@ end
         expect { subject.deposit(100) }.to raise_error(RuntimeError, 'No account present')
     end
   end
+end
 end
