@@ -14,13 +14,12 @@ class Person
   end
 
   def deposit(amount)
-    @account == nil ? missing_account : deposit_funds(amount)
+    @account.nil? ? error_message('account') : deposit_funds(amount)
   end
 
   def withdraw(args = {})
-    @account == nil ? missing_account : withdraw_funds(args)
+    @account.nil? ? error_message('account') : withdraw_funds(args)
   end
-
 
   private
 
@@ -30,7 +29,7 @@ class Person
   end
 
   def withdraw_funds(args)
-    args[:atm] == nil ? missing_atm : atm = args[:atm]
+    args[:atm].nil? ? error_message('ATM') : atm = args[:atm]
     account = @account
     amount = args[:amount]
     pin = args[:pin]
@@ -43,18 +42,12 @@ class Person
   end
 
   def set_name(name)
-    name == nil ? missing_name : name
+    name.nil? ? error_message : name
   end
 
-  def missing_name
-    raise ArgumentError, 'A name is required'
+  def error_message(message)
+    raise "An #{ message } is required"
   end
 
-  def missing_account
-    raise RuntimeError, 'No account present'
-  end
 
-  def missing_atm
-    raise RuntimeError, 'An ATM is required'
-  end
 end

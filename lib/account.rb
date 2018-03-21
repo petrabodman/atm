@@ -22,7 +22,7 @@ class Account
   end
 
   def deactivate
-    @account_status = :deactivated
+    @status = :deactivated
   end
 
   def missing_owner
